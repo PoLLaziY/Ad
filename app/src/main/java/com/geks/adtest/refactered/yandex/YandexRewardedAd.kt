@@ -53,7 +53,7 @@ class YandexRewardedAd(private val adId: String) : IRewardedAd, Initializable {
     ) {
         val callback = ::init.with(activity.application).inMain() + onShowed
         val onShowedCallback = useOnlyOnce(callback)
-
+        val onRewardedCorrect = useOnlyOnce(onRewarded)
         if (reserveRewardedAd == null) {
             onShowedCallback(false)
             return
@@ -72,7 +72,7 @@ class YandexRewardedAd(private val adId: String) : IRewardedAd, Initializable {
             }
 
             override fun onRewarded(p0: Reward) {
-                onRewarded(RewardData(p0.type, p0.amount))
+                onRewardedCorrect(RewardData(p0.type, p0.amount))
             }
 
             override fun onAdClicked() {}

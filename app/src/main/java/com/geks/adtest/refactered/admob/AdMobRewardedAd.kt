@@ -29,7 +29,7 @@ class AdMobRewardedAd(private val adId: String) : IRewardedAd, Initializable {
     ) {
         val callback = ::init.with(activity.application).inMain() + onShowed
         val onShowedCallback = useOnlyOnce(callback)
-
+        val onRewadedCorrect = useOnlyOnce(onRewarded)
         if (ad == null) {
             onShowedCallback(false)
             return
@@ -48,7 +48,7 @@ class AdMobRewardedAd(private val adId: String) : IRewardedAd, Initializable {
         }
 
         inMain(activity as? LifecycleOwner) {
-            ad?.show(activity) { onRewarded(RewardData(it.type, it.amount)) }
+            ad?.show(activity) { onRewadedCorrect(RewardData(it.type, it.amount)) }
         }
     }
 

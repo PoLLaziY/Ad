@@ -24,7 +24,7 @@ class AdMobOpenAd(private val adId: String) : FullScreenAd, Initializable {
     override fun show(activity: Activity, onShowed: (Boolean) -> Unit, onClosed: () -> Unit) {
         val callback = ::init.with(activity.application).inMain() + onShowed
         val onShowedCallback = useOnlyOnce(callback)
-
+        val onClosedCorrect = useOnlyOnce(onClosed)
         if (ad == null) {
             onShowedCallback(false)
             return
@@ -38,7 +38,7 @@ class AdMobOpenAd(private val adId: String) : FullScreenAd, Initializable {
 
             override fun onAdDismissedFullScreenContent() {
                 super.onAdDismissedFullScreenContent()
-                onClosed()
+                onClosedCorrect()
             }
 
             override fun onAdFailedToShowFullScreenContent(p0: AdError) {

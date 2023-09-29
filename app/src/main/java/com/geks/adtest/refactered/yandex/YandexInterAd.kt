@@ -26,7 +26,7 @@ class YandexInterAd(private val adId: String) : FullScreenAd, Initializable {
     override fun show(activity: Activity, onShowed: (Boolean) -> Unit, onClosed: () -> Unit) {
         val callback = ::init.with(activity.application).inMain() + onShowed
         val onShowedCallback = useOnlyOnce(callback)
-
+        val onClosedCorrect = useOnlyOnce(onClosed)
         if (ad == null) {
             onShowedCallback(false)
             return
@@ -39,7 +39,7 @@ class YandexInterAd(private val adId: String) : FullScreenAd, Initializable {
             }
 
             override fun onAdDismissed() {
-                onClosed()
+                onClosedCorrect()
             }
 
             override fun onAdFailedToShow(p0: AdError) {

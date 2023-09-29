@@ -3,17 +3,10 @@ package com.geks.adtest
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.view.ViewGroup
-import android.widget.FrameLayout
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import com.geks.adtest.databinding.ActivityMainBinding
 import com.geks.adtest.refactered.AdManager
-import com.geks.adtest.refactered.utils.FrameActivityHider
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
@@ -40,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.showInter.setOnClickListener {
             lifecycleScope.launch(Dispatchers.IO) {
-                AdManager.showInterAd(this@MainActivity) {
+                AdManager.navigate(this@MainActivity) {
                     this@MainActivity.startActivity(
                         Intent(
                             this@MainActivity,
